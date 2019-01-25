@@ -36,7 +36,15 @@ class WordPress_Plugin_Template_Taxonomy {
 	 */
 	public $post_types;
 
-	public function __construct ( $taxonomy = '', $plural = '', $single = '', $post_types = array() ) {
+  /**
+	 * The array of taxonomy arguments
+	 * @var 	array
+	 * @access  public
+	 * @since 	1.0.0
+	 */
+	public $taxonomy_args;
+
+	public function __construct ( $taxonomy = '', $plural = '', $single = '', $post_types = array(), $tax_args = array() ) {
 
 		if ( ! $taxonomy || ! $plural || ! $single ) return;
 
@@ -48,6 +56,7 @@ class WordPress_Plugin_Template_Taxonomy {
 			$post_types = array( $post_types );
 		}
 		$this->post_types = $post_types;
+		$this->taxonomy_args = $tax_args;
 
 		// Register taxonomy
 		add_action('init', array( $this, 'register_taxonomy' ) );
@@ -89,11 +98,17 @@ class WordPress_Plugin_Template_Taxonomy {
             'show_tagcloud' => true,
             'meta_box_cb' => null,
             'show_admin_column' => true,
+            'show_in_quick_edit' => true,
             'update_count_callback' => '',
+            'show_in_rest'          => true,
+            'rest_base'             => $this->taxonomy,
+            'rest_controller_class' => 'WP_REST_Terms_Controller',
             'query_var' => $this->taxonomy,
             'rewrite' => true,
             'sort' => '',
         );
+
+        $args = array_merge($args, $this->taxonomy_args);
 
         register_taxonomy( $this->taxonomy, $this->post_types, apply_filters( $this->taxonomy . '_register_args', $args, $this->taxonomy, $this->post_types ) );
     }

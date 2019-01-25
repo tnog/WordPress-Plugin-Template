@@ -109,10 +109,10 @@ class WordPress_Plugin_Template_Admin_API {
 			case 'checkbox_multi':
 				foreach ( $field['options'] as $k => $v ) {
 					$checked = false;
-					if ( in_array( $k, $data ) ) {
+					if ( in_array( $k, (array) $data ) ) {
 						$checked = true;
 					}
-					$html .= '<label for="' . esc_attr( $field['id'] . '_' . $k ) . '" class="checkbox_multi"><input type="checkbox" ' . checked( $checked, true, false ) . ' name="' . esc_attr( $option_name ) . '[]" value="' . esc_attr( $k ) . '" id="' . esc_attr( $field['id'] . '_' . $k ) . '" /> ' . $v . '</label> ';
+					$html .= '<p><label for="' . esc_attr( $field['id'] . '_' . $k ) . '" class="checkbox_multi"><input type="checkbox" ' . checked( $checked, true, false ) . ' name="' . esc_attr( $option_name ) . '[]" value="' . esc_attr( $k ) . '" id="' . esc_attr( $field['id'] . '_' . $k ) . '" /> ' . $v . '</label></p> ';
 				}
 			break;
 
@@ -142,7 +142,7 @@ class WordPress_Plugin_Template_Admin_API {
 				$html .= '<select name="' . esc_attr( $option_name ) . '[]" id="' . esc_attr( $field['id'] ) . '" multiple="multiple">';
 				foreach ( $field['options'] as $k => $v ) {
 					$selected = false;
-					if ( in_array( $k, $data ) ) {
+					if ( in_array( $k, (array) $data ) ) {
 						$selected = true;
 					}
 					$html .= '<option ' . selected( $selected, true, false ) . ' value="' . esc_attr( $k ) . '">' . $v . '</option>';
@@ -167,6 +167,12 @@ class WordPress_Plugin_Template_Admin_API {
 			        <div style="position:absolute;background:#FFF;z-index:99;border-radius:100%;" class="colorpicker"></div>
 			    </div>
 			    <?php
+			break;
+			
+			case 'editor':
+				wp_editor($data, $option_name, array(
+					'textarea_name' => $option_name
+				) );
 			break;
 
 		}

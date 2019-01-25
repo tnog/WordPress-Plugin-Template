@@ -1,7 +1,7 @@
 WordPress Plugin Template
 =========================
 
-A robust code template for creating a standards-compliant WordPress plugin.
+A robust and GPL-licensed code template for creating a standards-compliant WordPress plugin.
 
 
 ## Why this template?
@@ -37,13 +37,17 @@ This will register a new post type with all the standard settings. If you would 
 
 #### Registering a new taxonomy
 
-Using the [taxonomy API](https://github.com/hlashbrooke/WordPress-Plugin-Template/blob/master/includes/lib/class-wordpress-plugin-template-taxonomy.php) and the wrapper function from the main plugin class you can easily register new taxonomies with one line of code. For exapmle if you wanted to register a `location` taxonomy that applies to the `listing` post type then you could do it like this:
+Using the [taxonomy API](https://github.com/hlashbrooke/WordPress-Plugin-Template/blob/master/includes/lib/class-wordpress-plugin-template-taxonomy.php) and the wrapper function from the main plugin class you can easily register new taxonomies with one line of code. For example if you wanted to register a `location` taxonomy that applies to the `listing` post type then you could do it like this:
 
 `WordPress_Plugin_Template()->register_taxonomy( 'location', __( 'Locations', 'wordpress-plugin-template' ), __( 'Location', 'wordpress-plugin-template' ), 'listing' );`
 
 *Note that the `WordPress_Plugin_Template()` function name and the `wordpress-plugin-template` text domain will each be unique to your plugin after you have used the cloning script.*
 
 This will register a new taxonomy with all the standard settings. If you would like to modify the taxonomy settings you can use the `{$taxonomy}_register_args` filter. See [the WordPress codex page](http://codex.wordpress.org/Function_Reference/register_taxonomy) for all available arguments.
+
+#### Calling your Options
+
+Using the [Settings API](https://github.com/hlashbrooke/WordPress-Plugin-Template/blob/master/includes/class-wordpress-plugin-template-settings.php) and the wrapper function from the main plugin class you can easily store options from the WP admin like text boxes, radio options, dropdown, etc. You can call the values by using `id` that you have set under the `settings_fields` function. For example you have the `id` - `text_field`, you can call its value by using `get_option('wpt_text_field')`. Take note that by default, this plugin is using a prefix of `wpt_` before the id that you will be calling, you can override that value by changing it under the `__construct` function `$this->base` variable;
 
 ## What does this template give me?
 
@@ -66,8 +70,8 @@ See the [changelog](https://github.com/hlashbrooke/WordPress-Plugin-Template/blo
 
 ## I've got an idea/fix for the template
 
-If you would like to contribute to this template then please fork it and send a pull request. I'll merge the request if it fits into the goals for the template and credit you in the [changelog](https://github.com/hlashbrooke/WordPress-Plugin-Template/blob/master/changelog.txt).
+If you would like to contribute to this template then please fork it and send a pull request. Please submit all pull requests to the `develop` branch. I'll merge the request if it fits into the goals for the template and credit you in the [changelog](https://github.com/hlashbrooke/WordPress-Plugin-Template/blob/master/changelog.txt).
 
 ## This template is amazing! How can I ever repay you?
 
-There's no need to credit me in your code for this template, but if you would like to buy me some lunch then you can [donate here](http://www.hughlashbrooke.com/donate).
+There's no need to credit me in your code for this template, just go forth and use it to make the WordPress experience a little better.
